@@ -6,7 +6,7 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li><a href="#" class="" aria-expanded="false">
+            <li><a href="{{ route('menu.list') }}" class="" aria-expanded="false">
                     <i class="la la-users" style="font-size: 1.3rem !important"></i>
                     <span class="nav-text">Menu</span>
                 </a>

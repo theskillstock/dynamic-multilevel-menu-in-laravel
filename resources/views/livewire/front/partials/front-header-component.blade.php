@@ -7,32 +7,44 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#hero" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                            class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul>
-                        <li><a href="#">Dropdown 1</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Dropdown 1</a></li>
-                                <li><a href="#">Deep Dropdown 2</a></li>
-                                <li><a href="#">Deep Dropdown 3</a></li>
-                                <li><a href="#">Deep Dropdown 4</a></li>
-                                <li><a href="#">Deep Dropdown 5</a></li>
-                            </ul>
+                @foreach ($menus as $menu)
+                    @if ($menu->parent_id === null)
+                        <li class="{{ $menu->children->isNotEmpty() ? 'dropdown' : '' }}">
+                            <a href="{{ $menu->url }}"
+                                class="{{ request()->is(ltrim($menu->url, '/')) ? 'active' : '' }}"
+                                @if ($menu->children->isNotEmpty()) data-bs-toggle="dropdown" @endif>
+                                <span>{{ $menu->title }}</span>
+                                @if ($menu->children->isNotEmpty())
+                                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                @endif
+                            </a>
+                            @if ($menu->children->isNotEmpty())
+                                <ul>
+                                    @foreach ($menu->children as $child)
+                                        <li class="{{ $child->children->isNotEmpty() ? 'dropdown' : '' }}">
+                                            <a href="{{ $child->url }}"
+                                                @if ($child->children->isNotEmpty()) data-bs-toggle="dropdown" @endif>
+                                                <span>{{ $child->title }}</span>
+                                                @if ($child->children->isNotEmpty())
+                                                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                                @endif
+                                            </a>
+                                            @if ($child->children->isNotEmpty())
+                                                <ul>
+                                                    @foreach ($child->children as $grandchild)
+                                                        <li><a
+                                                                href="{{ $grandchild->url }}">{{ $grandchild->title }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </li>
-                        <li><a href="#">Dropdown 2</a></li>
-                        <li><a href="#">Dropdown 3</a></li>
-                        <li><a href="#">Dropdown 4</a></li>
-                    </ul>
-                </li>
-                <li><a href="#contact">Contact</a></li>
+                    @endif
+                @endforeach
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
