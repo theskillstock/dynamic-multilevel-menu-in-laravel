@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ActionhandlerController;
-use App\Http\Controllers\ProfileController;
 use App\Livewire\DashboardComponent;
 use App\Livewire\Authentication\AdminLoginComponent;
 use App\Livewire\Front\HomePageComponent;
@@ -17,8 +16,3 @@ Route::get('/admin/menu', MenuListComponent::class)->name('menu.list');
 Route::get('/admin/menu/{id}/edit', MenuEditComponent::class)->name('menu.edit');
 Route::get('/admin/menu/{id}/delete', [ActionhandlerController::class,'deleteMenu'])->name('menu.delete');
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('dashboard', DashboardComponent::class)->name('dashboard');
-// });
-
-require __DIR__ . '/auth.php';
